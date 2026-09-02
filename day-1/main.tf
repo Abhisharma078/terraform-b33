@@ -1,10 +1,18 @@
 resource "aws_instance" "ec2" {
-    ami = "ami-0bea529386a62a2ad"
-    instance_type = "t3.micro"
-    key_name = "abhi"
-    vpc_security_group_ids = ["sg-04e4cffd9a88111c8"]
+    ami           = var.ami
+    instance_type = var.instance_type
+    key_name      = var.key_name
+    vpc_security_group_ids = [var.sg_id]
+
+    user_data = file("/root/terraform-b33/day-1/user_data.sh")
+    
+    root_block_device {
+        volume_size = var.volume_size
+        volume_type = var.volume_type
+    }
+
     tags = {
-        Name = "my_ec2"
+        Name = "ec2"
     }
 }
 
