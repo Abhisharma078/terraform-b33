@@ -10,10 +10,6 @@ variable "key_name" {
     default = "abhi"
 }
 
-variable "sg_id" {
-    default = "sg-04e4cffd9a88111c8"
-}
-
 variable "volume_size" {
     default = 10
 }
