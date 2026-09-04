@@ -2,12 +2,12 @@ data "aws_vpc" "default" {
     default = true
 }
 
-data "aws_subnets" "default" {
-    filter {
-        name   = "vpc-id"
-        values = [data.aws_vpc.default.id]
-    }
-}
+# data "aws_subnets" "default" {
+#     filter {
+#         name   = "vpc-id"
+#         values = [data.aws_vpc.default.id]
+#     }
+# }
 
 #CREATION OF SECURITY GROUPS
 resource "aws_security_group" "sg" {
@@ -55,7 +55,7 @@ resource "aws_lb_target_group" "tg" {
 resource "aws_lb" "lb" {
     name = "ALB"
     load_balancer_type = "application"
-    subnets = [data.aws_subnets.default.ids]
+    subnets = ["subnet-05b2840f19ad5821c","subnet-01bed4d0e2f0c2f7f"]
     internal = false 
     security_groups = [aws_security_group.sg.id]
 }
@@ -86,7 +86,7 @@ resource "aws_autoscaling_group" "asg" {
     min_size = 2
     max_size = 10 
     target_group_arns = [aws_lb_target_group.tg.arn] 
-    vpc_zone_identifier = [data.aws_subnets.default.ids]
+    vpc_zone_identifier = ["subnet-05b2840f19ad5821c","subnet-01bed4d0e2f0c2f7f"]
     launch_template {
       id = aws_launch_template.lt.id 
       version = "$Latest"
