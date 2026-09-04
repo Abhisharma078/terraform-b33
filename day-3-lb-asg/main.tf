@@ -13,7 +13,7 @@ data "aws_vpc" "default" {
 resource "aws_security_group" "sg" {
     name = "my_sg"
     description = "my_sg"
-    vpc_id = aws_vpc.default.id 
+    vpc_id = data.aws_vpc.default.id 
 
     ingress {
         from_port = 80
